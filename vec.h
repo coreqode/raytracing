@@ -158,6 +158,23 @@ inline vec random_in_hemisphere(const vec& normal){
 inline vec reflect(const vec& v, const vec& n){
     return v - 2.0 * dot(v, n) * n; 
 }
+
+inline vec refract(const vec& uv, const vec& n, double eta_ratio){
+    auto cos_t = fmin(dot(-uv, n), 1.0);
+    vec r_out_perp = eta_ratio * (uv + cos_t * n);
+    vec r_out_parallel = -sqrt(fabs(1.0 - r_out_perp.length_squared())) * n;
+    return r_out_perp + r_out_parallel;
+}
+
+inline vec random_in_unit_disk(){
+    while(true){
+        auto p = vec(random_double(-1, 1), random_double(-1, 1), 0);
+        if (p.length_squared() >=1){
+            continue;
+        }
+        return p;
+    }
+}
 //Alias
 using point = vec;
 using color = vec;
