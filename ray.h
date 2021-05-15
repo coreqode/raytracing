@@ -1,25 +1,28 @@
 #ifndef RAY_H
 #define RAY_H
 
-#include "vec3.h"
+#include "vec.h"
 
 class ray{
     public:
         ray(){}
-        ray(const point3& origin, const vec3& direction)
-            :orig(origin), dir(direction)
-        {}
-
-        point3 origin() const {return orig;}
-        vec3 direction() const {return dir;}
-
-        point3 at(double t) const{
-            return orig + t*dir ; 
+        ray(const point& origin, const point& direction){
+            orig = origin;
+            dir = direction;
+        }
+        point origin() const{
+            return orig;
+        }
+        vec direction() const{
+            return dir;
+        }
+        point at(double t) const{
+            return orig + t * dir;
         }
 
     public:
-        point3 orig;
-        vec3 dir;
-
+        point orig;
+        vec dir;
 };
+
 #endif

@@ -1,23 +1,27 @@
 #ifndef COLOR_H
 #define COLOR_H
 
-#include "vec3.h"
-#include "utility.h"
 #include <iostream>
+#include "utility.h"
 
-void write_color(std::ostream &out, color pixel_color, int samples_per_pixel){
+using namespace std;
+
+void write_color(color pixel_color);
+
+void write_color(color pixel_color, int samples_per_pixel){
     auto r = pixel_color.x();
     auto g = pixel_color.y();
     auto b = pixel_color.z();
 
-    auto scale = 1.0  / samples_per_pixel;
-    r *= scale;
-    g *= scale;
-    b *= scale;
+    auto scale = 1.0 / samples_per_pixel;
 
-    out << static_cast<int>(256 * clamp(r, 0.0, 0.999))<<' '
-        << static_cast<int>(256 * clamp(g, 0.0, 0.999))<<' '
-        << static_cast<int>(256 * clamp(b, 0.0, 0.999))<<'\n';
-
+    r = clamp(sqrt(r * scale), 0, 0.999);
+    g = clamp(sqrt(g * scale), 0, 0.999);
+    b = clamp(sqrt(b * scale), 0, 0.999);
+    cout << static_cast<int>(256 * r)<<' '<<
+        static_cast<int>(256 * g)<<' '<<
+        static_cast<int>(256 * b)<<'\n';
 }
+
+
 #endif
